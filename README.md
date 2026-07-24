@@ -1,23 +1,30 @@
 # CoreLink Python SDK
 
-Official Python SDK for CoreLink APIs.
+Generated prerelease client for the CoreLink Public API. It is not published or
+production-supported until its contract and runtime PRs are merged and sandbox
+compatibility tests pass.
 
-> Status: Planned. This repository does not contain a released package yet.
+## Contract provenance
 
-## Planned capabilities
+- Contract: `corelink-public-v1.yaml`, version `1.0.0-draft`
+- Source branch: `agent/p3-1-contracts`
+- Source commit: `701e693`
+- Generator: OpenAPI Generator `7.12.0`, `python`
 
-- OAuth client credentials
-- Device registry
-- Provisioning
-- Commands
-- Pagination
-- Typed errors
-- Webhook verification
+The SDK exposes canonical CoreLink identifiers only. Connector selection and
+integration-provider identifiers remain server-side concerns.
 
-## Documentation
+## Local verification
 
-See the [CoreLink developer documentation](https://github.com/CoreLinkPlatform/developer-docs).
+```sh
+python -m compileall corelink_sdk
+```
 
-## License
+See [CODEGEN.md](CODEGEN.md) for deterministic regeneration. Generated files
+under `corelink_sdk/` are not hand-maintained.
 
-License information will be added before the first public release.
+## Release gate
+
+Publish only after a merged, tagged contract, sandbox compatibility tests,
+clean generated diff, package build, and release notes that record the exact
+contract commit.
