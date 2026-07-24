@@ -3,7 +3,7 @@
   "contractVersion": "1.0.0-draft",
   "sourceRepository": "CoreLinkPlatform/api-contracts",
   "sourceBranch": "agent/p3-1-contracts",
-  "sourceCommit": "701e693",
+  "sourceCommit": "2fb0dc8",
   "generator": "openapi-generator-cli",
   "generatorVersion": "7.12.0",
   "generatorName": "python"

@@ -2,7 +2,7 @@
 
 This client is generated from `corelink-public-v1.yaml` with OpenAPI Generator
 `7.12.0`. The authoritative input for this prerelease was contract commit
-`701e693` on `agent/p3-1-contracts`.
+`2fb0dc8` on `agent/p3-1-contracts`.
 
 ```sh
 java -jar openapi-generator-cli-7.12.0.jar generate \

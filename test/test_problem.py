@@ -40,6 +40,7 @@ class TestProblem(unittest.TestCase):
                 status = 56,
                 code = '',
                 detail = '',
+                diagnostics = { },
                 correlation_id = ''
             )
         else:

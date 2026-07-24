@@ -18,8 +18,9 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from corelink_sdk.models.command_status import CommandStatus
 from typing import Optional, Set
 from typing_extensions import Self
@@ -38,10 +39,11 @@ class Command(BaseModel):
     timeout_at: Optional[datetime] = None
     acknowledged_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None
+    error_code: Optional[Annotated[str, Field(strict=True, max_length=100)]] = None
     metadata: Dict[str, Any]
     created_at: datetime
     updated_at: datetime
-    __properties: ClassVar[List[str]] = ["command_id", "tenant_id", "corelink_device_id", "command_type", "payload", "status", "attempt_count", "timeout_at", "acknowledged_at", "completed_at", "metadata", "created_at", "updated_at"]
+    __properties: ClassVar[List[str]] = ["command_id", "tenant_id", "corelink_device_id", "command_type", "payload", "status", "attempt_count", "timeout_at", "acknowledged_at", "completed_at", "error_code", "metadata", "created_at", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -97,6 +99,11 @@ class Command(BaseModel):
         if self.completed_at is None and "completed_at" in self.model_fields_set:
             _dict['completed_at'] = None
 
+        # set to None if error_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.error_code is None and "error_code" in self.model_fields_set:
+            _dict['error_code'] = None
+
         return _dict
 
     @classmethod
@@ -119,6 +126,7 @@ class Command(BaseModel):
             "timeout_at": obj.get("timeout_at"),
             "acknowledged_at": obj.get("acknowledged_at"),
             "completed_at": obj.get("completed_at"),
+            "error_code": obj.get("error_code"),
             "metadata": obj.get("metadata"),
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at")

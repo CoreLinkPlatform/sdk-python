@@ -31,8 +31,9 @@ class Problem(BaseModel):
     status: StrictInt
     code: StrictStr
     detail: Optional[StrictStr] = None
+    diagnostics: Optional[Dict[str, Any]] = None
     correlation_id: StrictStr
-    __properties: ClassVar[List[str]] = ["type", "title", "status", "code", "detail", "correlation_id"]
+    __properties: ClassVar[List[str]] = ["type", "title", "status", "code", "detail", "diagnostics", "correlation_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,6 +91,7 @@ class Problem(BaseModel):
             "status": obj.get("status"),
             "code": obj.get("code"),
             "detail": obj.get("detail"),
+            "diagnostics": obj.get("diagnostics"),
             "correlation_id": obj.get("correlation_id")
         })
         return _obj
