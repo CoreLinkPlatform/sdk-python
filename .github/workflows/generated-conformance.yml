@@ -1,0 +1,48 @@
+name: Generated SDK Conformance
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regenerate-and-build:
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch immutable contract
+        run: |
+          curl --fail --location \
+            https://raw.githubusercontent.com/CoreLinkPlatform/api-contracts/v1.0.0-draft/openapi/corelink-public-v1.yaml \
+            --output /tmp/corelink-public-v1.yaml
+      - name: Fetch pinned generator
+        run: |
+          curl --fail --location \
+            https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.12.0/openapi-generator-cli-7.12.0.jar \
+            --output /tmp/openapi-generator-cli.jar
+      - name: Regenerate in temporary directory
+        run: |
+          rm -rf /tmp/corelink-python-generated
+          mkdir -p /tmp/corelink-python-generated
+          java -jar /tmp/openapi-generator-cli.jar generate \
+            -i /tmp/corelink-public-v1.yaml \
+            -g python \
+            -o /tmp/corelink-python-generated \
+            --additional-properties=packageName=corelink_sdk,projectName=corelink-sdk,packageVersion=0.1.0.dev0 \
+            --global-property=apiDocs=false,modelDocs=false
+      - name: Verify generated source is reproducible
+        run: diff -ru --exclude='__pycache__' corelink_sdk /tmp/corelink-python-generated/corelink_sdk
+      - name: Compile checked-in SDK
+        run: python -m compileall corelink_sdk
