@@ -1,30 +1,71 @@
 # CoreLink Python SDK
 
-Generated prerelease client for the CoreLink Public API. It is not published or
-production-supported until its contract and runtime PRs are merged and sandbox
-compatibility tests pass.
+> **Maturity: Prerelease Alpha**  
+> Package metadata: `corelink-sdk` `0.1.0.dev0`  
+> Python: `>=3.9`  
+> Public contract: `corelink-public-v1.yaml` `1.0.0-draft`
 
-## Contract provenance
+Generated Python client for the CoreLink Public API. The package source exists, but CoreLink does not yet claim a production-supported PyPI/Stable release. Public license/support policy and sandbox/runtime conformance remain release gates.
 
-- Contract: `corelink-public-v1.yaml`, version `1.0.0-draft`
-- Source branch: `agent/p3-1-contracts`
-- Source commit: `701e693`
-- Generator: OpenAPI Generator `7.12.0`, `python`
+## What is currently covered
 
-The SDK exposes canonical CoreLink identifiers only. Connector selection and
-integration-provider identifiers remain server-side concerns.
+The generated client follows the current reviewed public contract, whose primary public slice is Device + Command. Broader telemetry/location/partner/event behavior remains contract- and acceptance-gated.
 
-## Local verification
+## Build/verify from source
 
-```sh
+Create a Python 3.9+ environment and install the repository requirements/package using your normal isolated Python workflow. For a basic generated-source verification:
+
+```bash
 python -m compileall corelink_sdk
 ```
 
-See [CODEGEN.md](CODEGEN.md) for deterministic regeneration. Generated files
-under `corelink_sdk/` are not hand-maintained.
+This is a prerelease source workflow, not a claim that a Stable public package is published.
 
-## Release gate
+## Authentication and tenant context
 
-Publish only after a merged, tagged contract, sandbox compatibility tests,
-clean generated diff, package build, and release notes that record the exact
-contract commit.
+The current public API uses Bearer JWT authentication and explicit tenant-scoped paths. Obtain credentials through the approved CoreLink environment/onboarding boundary; do not invent a token endpoint from SDK internals.
+
+Use least-privilege credentials, keep tenant context explicit, and avoid logging credentials or sensitive customer payloads.
+
+## Devices and commands
+
+Public device identity is `corelink_device_id`. Provider-specific IDs remain internal implementation details.
+
+Command creation is asynchronous and idempotency-aware. Retrying the same logical command must preserve the original `Idempotency-Key`; an accepted POST does not prove that the physical device executed the command.
+
+Because this package is generated/prerelease, exact generated class and method names may change. Use the generated source/type hints for the pinned revision instead of relying on undocumented wrapper APIs.
+
+## Errors and retries
+
+Follow the OpenAPI problem/error definitions. Validation/auth/authorization failures should not be blindly retried. Preserve correlation/request identifiers needed for diagnosis and reconcile uncertain writes before creating a second logical operation.
+
+## Contract provenance
+
+Generation provenance is recorded in `.corelink-contract.json` and [CODEGEN.md](CODEGEN.md). Existing prerelease metadata references a development source revision; supported releases must use immutable/tagged contract provenance.
+
+## Regeneration
+
+Generated files under `corelink_sdk/` are not hand-maintained. Change normative schemas in [`CoreLinkPlatform/api-contracts`](https://github.com/CoreLinkPlatform/api-contracts), regenerate deterministically, then review the generated diff.
+
+## License and publication gate
+
+Current package metadata declares `LicenseRef-Proprietary`. Public repository visibility is not an open-source license. The applicable organization license/support policy must be explicitly resolved before supported public package publication.
+
+## Release gates
+
+Before a supported package release:
+
+- license/support policy is accepted;
+- contract provenance is immutable/version-identifiable;
+- generation/build is reproducible;
+- auth/tenant/error/retry behavior matches the contract;
+- conformance passes against an accepted mock/sandbox/runtime revision;
+- release provenance/signing/documentation gates pass.
+
+Backlog: [PY-01](https://github.com/CoreLinkPlatform/sdk-python/issues/4), [PY-02](https://github.com/CoreLinkPlatform/sdk-python/issues/2), [PY-03](https://github.com/CoreLinkPlatform/sdk-python/issues/3).
+
+## Documentation
+
+- [CoreLink developer docs](https://github.com/CoreLinkPlatform/developer-docs)
+- [API contracts](https://github.com/CoreLinkPlatform/api-contracts)
+- [Repository maturity](https://github.com/CoreLinkPlatform/.github/blob/main/REPOSITORY_MATURITY.md)
