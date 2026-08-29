@@ -1,9 +1,10 @@
 {
-  "contract": "corelink-public-v1.yaml",
+  "contract": "openapi/corelink-public-v1.yaml",
   "contractVersion": "1.0.0-draft",
   "sourceRepository": "CoreLinkPlatform/api-contracts",
-  "sourceBranch": "agent/p3-1-contracts",
-  "sourceCommit": "2fb0dc8",
+  "sourceRef": "v1.0.0-draft",
+  "sourceCommit": "5bdc07b80c8acbd0617b75e2d7ae3edd17f6324b",
+  "sourceBlob": "11cd7034f2b6dc736e23a4cf36242a34f0d637e5",
   "generator": "openapi-generator-cli",
   "generatorVersion": "7.12.0",
   "generatorName": "python"
