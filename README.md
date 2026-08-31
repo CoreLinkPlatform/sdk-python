@@ -1,5 +1,11 @@
 # CoreLink Python SDK
 
+[![Maturity: Prerelease Alpha](https://img.shields.io/badge/maturity-prerelease%20alpha-orange)](https://github.com/CoreLinkPlatform/.github/blob/main/REPOSITORY_MATURITY.md)
+[![Generated conformance](https://github.com/CoreLinkPlatform/sdk-python/actions/workflows/generated-conformance.yml/badge.svg?branch=main)](https://github.com/CoreLinkPlatform/sdk-python/actions/workflows/generated-conformance.yml)
+[![Package: 0.1.0.dev0](https://img.shields.io/badge/package-0.1.0.dev0-orange)](pyproject.toml)
+[![Python >=3.9](https://img.shields.io/badge/python-%3E%3D3.9-blue)](https://www.python.org/)
+[![Contract: 1.0.0-draft](https://img.shields.io/badge/contract-1.0.0--draft-blue)](https://github.com/CoreLinkPlatform/api-contracts)
+
 > **Maturity: Prerelease Alpha**  
 > Package metadata: `corelink-sdk` `0.1.0.dev0`  
 > Python: `>=3.9`  
